@@ -1,0 +1,24 @@
+yum search git
+yum install git
+useradd git
+su - git
+mkdir $HOME/git-shell-commands
+cat >$HOME/git-shell-commands/no-interactive-login <<\EOF
+#!/bin/sh
+printf '%s\n' "Hi $USER! You've successfully authenticated, but I do not"
+printf '%s\n' "provide interactive shell access."
+exit 128
+EOF
+chmod +x $HOME/git-shell-commands/no-interactive-login
+chsh -s /usr/bin/git-shell git
+which git-shell
+cat /etc/shells
+echo '/usr/bin/git-shell' >> /etc/shells
+cat /etc/passwd
+mkdir /git
+chown -R git:git /git
+mkdir /home/git/.ssh
+touch /home/git/.ssh/authorized_keys
+chmod 600 /home/git/.ssh/authorized_keys
+chmod 700 /home/git/.ssh
+chown -R git:git /home/git/

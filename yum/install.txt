@@ -1,0 +1,104 @@
+#!/bin/bash
+
+yum update -y
+
+# rng-tools
+yum install -y rng-tools
+systemctl stop rngd
+sed -i '/ExecStart*/c\ExecStart=/sbin/rngd -f -r /dev/urandom' /usr/lib/systemd/system/rngd.service
+systemctl daemon-reload
+systemctl enable rngd
+systemctl start rngd
+
+# mariadb
+yum install -y mariadb*
+systemctl enable mariadb
+systemctl start mariadb
+
+# git
+yum install -y git
+
+# maven
+yum install -y maven*
+
+# nginx
+yum install -y nginx
+systemctl enable nginx
+systemctl start nginx
+
+# redis
+yum install -y redis
+systemctl enable redis
+systemctl start redis
+
+# tomcat
+yum install -y tomcat tomcat-*
+systemctl enable tomcat
+systemctl start tomcat
+
+echo 'install success'
+
+# git
+useradd git
+if [ $? -eq 0 ]
+then
+HOME=/home/git
+mkdir $HOME/git-shell-commands
+cat >$HOME/git-shell-commands/no-interactive-login <<\EOF
+#!/bin/sh
+printf '%s\n' "Hi $USER! You've successfully authenticated, but I do not"
+printf '%s\n' "provide interactive shell access."
+exit 128
+EOF
+chmod +x $HOME/git-shell-commands/no-interactive-login
+
+grep -q /usr/bin/git-shell /etc/shells
+if [ $? -ne 0 ]
+then
+echo '/usr/bin/git-shell' >> /etc/shells
+fi
+
+chsh -s /usr/bin/git-shell git
+mkdir /git
+chown -R git:git /git
+mkdir /home/git/.ssh
+touch /home/git/.ssh/authorized_keys
+chmod 600 /home/git/.ssh/authorized_keys
+chmod 700 /home/git/.ssh
+chown -R git:git /home/git/
+fi
+
+echo 'config git success'
+# git
+
+# mariadb
+mysql -uroot << EOF
+set password=password('password');
+grant all privileges on *.* to 'admin'@'%' identified by "password";
+EOF
+grep -q ^.*skip-name-resolve.*$ /etc/my.cnf
+if [ $? -ne 0 ]
+then
+sed -i '/^.*\[mysqld\].*$/c\[mysqld]\nskip-name-resolve' /etc/my.cnf
+systemctl stop mariadb
+systemctl start mariadb
+fi
+# mariadb
+
+# redis
+sed -i -r '/^bind\s+[0-9]+.*$/c\# bind 127.0.0.1' /etc/redis.conf
+sed -i -r '/^#\s+requirepass.*$/c\requirepass password' /etc/redis.conf
+systemctl restart redis
+# redis
+
+# tomcat
+grep -q ^\<role.*$ /etc/tomcat/tomcat-users.xml
+if [ $? -ne 0 ]
+then
+sed -i -r '/^\s*<\/tomcat-users>.*$/c\<role rolename="admin-gui"/>\n<role rolename="manager-gui"/>\n<user name="tomcat" password="password" roles="admin-gui,manager-gui" />\n</tomcat-users>' /etc/tomcat/tomcat-users.xml
+systemctl stop tomcat
+systemctl start tomcat
+fi
+# tomcat
+
+echo 'config success'

@@ -1,0 +1,6 @@
+yum search nginx
+yum install nginx
+nginx -t
+systemctl status nginx
+systemctl start nginx
+systemctl enable nginx

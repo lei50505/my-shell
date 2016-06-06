@@ -1,0 +1,12 @@
+cat /proc/sys/kernel/random/entropy_avail
+cat /dev/random | od -x
+yum search rng-tools
+yum install rng-tools
+systemctl status rngd
+vi /usr/lib/systemd/system/rngd.service
+ExecStart=/sbin/rngd -f -r /dev/urandom
+systemctl daemon-reload
+systemctl start rngd
+systemctl enable rngd
+
+sed -i '/ExecStart*/c\ExecStart=/sbin/rngd -f -r /dev/urandom'

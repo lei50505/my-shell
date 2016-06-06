@@ -1,0 +1,8 @@
+yum search redis
+yum install redis
+vi /etc/redis.conf
+# bind 127.0.0.1
+requirepass password
+systemctl status redis
+systemctl start redis
+systemctl enable redis

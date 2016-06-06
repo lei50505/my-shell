@@ -1,0 +1,11 @@
+yum search tomcat
+yum install tomcat tomcat-*
+find / -name tomcat
+cd /usr/share/tomcat
+vi /etc/tomcat/tomcat-users.xml
+<role rolename="admin-gui"/>
+<role rolename="manager-gui"/>
+<user name="tomcat" password="password" roles="admin-gui,manager-gui" />
+systemctl status tomcat
+systemctl start tomcat
+systemctl enable tomcat

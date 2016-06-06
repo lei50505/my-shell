@@ -1,0 +1,2 @@
+yum seach maven
+yum install maven*

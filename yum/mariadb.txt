@@ -1,0 +1,9 @@
+yum search mariadb
+yum install mariadb*
+systemctl status mariadb
+systemctl start mariadb
+systemctl enable mariadb
+mysql_secure_installation
+mysql -u root -p
+set password=password('password');
+grant all privileges on *.* to 'admin'@'%' identified by "password";
