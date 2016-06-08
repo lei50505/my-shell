@@ -40,6 +40,7 @@ if [ $? -ne 0 ]
 then
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
+rm -f get-pip.py
 echo 'Install pip success.'
 fi
 pip show -q shadowsocks
