@@ -49,7 +49,7 @@ echo 'The Shadowsocks has already been installed.'
 return 0
 fi
 pip install shadowsocks
-if [ -d /usr/local/my-ss ]
+if [ ! -d /usr/local/my-ss ]
 then
 mkdir /usr/local/my-ss
 fi
