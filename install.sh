@@ -174,6 +174,42 @@ echo '90-=op[]'|passwd --stdin root
 echo 'Change password for user root success.'
 }
 
+installPPTPD(){
+type pptpd
+if [ $? -eq 0 ]
+then
+echo 'PPTPD has been already installed.'
+return 0
+fi
+yum install -y epel-release
+yum install -y ppp iptables pptpd
+sed -i '/^\s*#\s*localip\s*192\.168\.0\.1/c\localip 192.168.0.1' /etc/pptpd.conf
+sed -i '/^\s*#\s*remoteip\s*192\.168\.0\.234-238\s*,\s*192\.168\.0\.245/c\remoteip 192.168.0.234-238,192.168.0.245' /etc/pptpd.conf
+sed -i '/^#ms-dns\s*10.0.0.1/c\ms-dns 8.8.8.8' /etc/ppp/options.pptpd
+sed -i '/^#ms-dns\s*10.0.0.2/c\ms-dns 8.8.4.4' /etc/ppp/options.pptpd
+grep -q "\s*pptp\s\{1,\}pptpd\s\{1,\}caolei123\s\{1,\}\*" /etc/ppp/chap-secrets
+if [ $? -ne 0 ]
+then
+echo 'pptp pptpd caolei123 *' >> /etc/ppp/chap-secrets
+fi
+grep -q "net\.ipv4\.ip_forward=1" /etc/sysctl.conf
+if [ $? -ne 0 ]
+then
+echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+sysctl -p
+fi
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 144.168.63.86
+grep -F -q "iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 144.168.63.86" /etc/rc.d/rc.local
+if [ $? -ne 0 ]
+then
+chmod +x /etc/rc.d/rc.local
+echo 'iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 144.168.63.86' >> /etc/rc.d/rc.local
+fi
+systemctl enable pptpd
+systemctl start pptpd
+echo 'Install PPTPD success.'
+}
+
 while true
 do
 echo '1)changeSSHPort12300'
@@ -183,6 +219,7 @@ echo '4)installGit'
 echo '5)addGitKey'
 echo '6)addGitRepo'
 echo '7)changeRootPsw90etc'
+echo '8)installPPTPD'
 echo 'Exit Ctrl+C'
 echo -n 'Please Choose: '
 read myFlag
@@ -207,6 +244,9 @@ addGitRepo
 ;;
 7)
 changeRootPsw90etc
+;;
+8)
+installPPTPD
 ;;
 *)
 echo 'Wrong Choice!'
