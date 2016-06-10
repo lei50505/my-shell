@@ -286,13 +286,15 @@ echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
 sysctl -p > /dev/null 2>&1
 fi
 
-iptables -t nat -A POSTROUTING -j SNAT --to-source 144.168.63.86
+ip=`ifconfig|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'`
 
-grep -F -q "iptables -t nat -A POSTROUTING -j SNAT --to-source 144.168.63.86" /etc/rc.d/rc.local
+iptables -t nat -A POSTROUTING -j SNAT --to-source $ip
+
+grep -F -q "iptables -t nat -A POSTROUTING -j SNAT --to-source $ip" /etc/rc.d/rc.local
 if [ $? -ne 0 ]
 then
 chmod +x /etc/rc.d/rc.local
-echo 'iptables -t nat -A POSTROUTING -j SNAT --to-source 144.168.63.86' >> /etc/rc.d/rc.local
+echo "iptables -t nat -A POSTROUTING -j SNAT --to-source $ip" >> /etc/rc.d/rc.local
 fi
 
 systemctl enable pptpd
