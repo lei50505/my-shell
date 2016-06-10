@@ -268,7 +268,7 @@ refuse-mschap
 require-mschap-v2
 require-mppe-128
 ms-dns 114.114.114.114
-ms-dns 8.8.8.8
+ms-dns 114.114.115.115
 proxyarp
 lock
 nobsdcomp
@@ -288,13 +288,13 @@ fi
 
 ip=`ifconfig|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'`
 
-iptables -t nat -A POSTROUTING -j SNAT --to-source $ip
+iptables -t nat -A POSTROUTING -s 172.16.36.0/24 -j SNAT --to-source $ip
 
-grep -F -q "iptables -t nat -A POSTROUTING -j SNAT --to-source $ip" /etc/rc.d/rc.local
+grep -F -q "iptables -t nat -A POSTROUTING -s 172.16.36.0/24 -j SNAT --to-source $ip" /etc/rc.d/rc.local
 if [ $? -ne 0 ]
 then
 chmod +x /etc/rc.d/rc.local
-echo "iptables -t nat -A POSTROUTING -j SNAT --to-source $ip" >> /etc/rc.d/rc.local
+echo "iptables -t nat -A POSTROUTING -s 172.16.36.0/24 -j SNAT --to-source $ip" >> /etc/rc.d/rc.local
 fi
 
 systemctl enable pptpd
