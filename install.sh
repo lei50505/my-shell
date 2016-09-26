@@ -173,6 +173,8 @@ cd /home/git/"$repoName"
 git --bare init
 chown -R git:git /home/git
 echo 'Create git repo success.'
+# git remote add d ssh://git@ti19.com:12300/home/git/my-feedback.git
+# git remote add c git@git.oschina.net:caolei6/my-paper.git
 }
 
 changeRootPsw90etc(){
