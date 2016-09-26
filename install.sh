@@ -18,7 +18,7 @@ echo 'Change the SSH port 12300 success.'
 }
 
 addHaseePCPuttyKey(){
-sshKey='ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAg8ZRpQBCreQw9vPwz1KDiix+DDwvbI58VC9/x47wTpMu0tyQahSrahq1ku+O+N6UF3fGzNaYdj0GjLXFP6qnserKf0a3l+LT8m5jKd86bDn1fJ1e9iMmCmuJ1NgLtE7yA6FD+EHmY9yGVxPigW1brMLtx8jd6OVsEvKxHABnnmUzYfV1ILs7v+DWuDT2nsQuFz4NN+rvTTqyRiKa4ssZf3OQ5+G0hQvFT+LHy3KguGIFuq9d1Y/vd8OjcDUiwf9sTOMrhXOEY1U1T8w7ZXa/AAcuJ+Nn8V1fCJyC0ZlioF+N0PfxFt+QkRk1jdWONzXaQ8fQ7O1t9/k0uVUq7hVnhQ== rsa-key-20160601'
+sshKey='ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAzk9KrXrSYSBD4pIeRX2+KqqcsMvit1z+xxaMsgUSYjp4uXNkmTyQlmxWdQYk/8CihvlkZsG2yk7L5zyQbTcl9xCS237UnMlmuiIRzrFWtL+vYiHc0JEd03ejc9oGoYOmSfmBb+cxR+Wums5kEpxNMnVZFk82HjH1+tidm5JZ1xhtjUYCHlCx0aiJwaf0GXZdVqjvWCtXVuyrUN8b6GlbwwyWm1DgjB7vPkUI5DjKXvl68maPIHqV/o5IuWy9+yzD6MDYilIZq9IQGj5EIS6Jbc65fIm6jdHmLxQzFGD8fAFoxJ10pOhYIl30PMGeGEXWMSUDusP+pBsDjt7CLMQI7Q== rsa-key-20160926'
 if [ ! -f ~/.ssh/authorized_keys ]
 then
 mkdir ~/.ssh
