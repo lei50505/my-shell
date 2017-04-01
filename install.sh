@@ -360,6 +360,18 @@ yum install -y gcc-c++ libnet libpcap libnet-devel libpcap-devel
 cd net-speeder-master
 sh build.sh -DCOOKED
 
+# http://blog.csdn.net/yuesichiu/article/details/51485147
+
+grep -q -i -E "net-speeder-master.+net_speeder" /etc/rc.local
+
+if [ $? -ne 0 ]
+then
+echo 'Install Success!'
+return 0
+fi
+
+echo '/usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &' >> /etc/rc.local
+echo 'Install Success!'
 }
 
 while true
