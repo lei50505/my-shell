@@ -63,7 +63,7 @@ cat <<EOF > /usr/local/my-ss/ss.json
   "local_port": 1080,
   "timeout": 300,
   "password": "caolei750107",
-  "method": "aes-256-cfb",
+  "method": "rc4-md5",
   "fast_open": false,
   "workers": 1
 }
