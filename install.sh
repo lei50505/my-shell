@@ -355,7 +355,7 @@ return -3
 fi
 fi
 
-yum install -y libnet libpcap libnet-devel libpcap-devel
+yum install -y gcc-c++ libnet libpcap libnet-devel libpcap-devel
 
 cd net-speeder-master
 sh build.sh -DCOOKED
