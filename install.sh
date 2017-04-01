@@ -14,7 +14,7 @@ echo 'The SSH port number is already 12300.'
 return 0
 fi
 # sed -i '/^\s*[Pp]\{1\}ort\s\{1,\}/c\Port 12300' /etc/ssh/sshd_config
-sed -i -r '/^[[:space:]]*[Pp]{1}ort[[:space:]]+/cPort 12301' /etc/ssh/sshd_config
+sed -i -r '/^[[:space:]]*[Pp]{1}ort[[:space:]]+/cPort 12300' /etc/ssh/sshd_config
 systemctl restart sshd
 echo 'Change the SSH port 12300 success.'
 }
