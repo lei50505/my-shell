@@ -306,6 +306,65 @@ systemctl start pptpd
 echo 'Install PPTPD success.'
 }
 
+installNetSpeeder(){
+
+if [ ! -d /usr/local ]
+then
+echo '/usr/local not exist!'
+return -1
+fi
+
+cd /usr/local
+
+if [ -f master.zip ]
+then
+echo 'Please remove master.zip first!'
+return -1
+fi
+
+if [ -d net-speeder-master ]
+then
+echo 'Please remove net-speeder-master folder first!'
+return -1
+fi
+
+wget https://github.com/snooda/net-speeder/archive/master.zip
+if [ $? -ne 0 ]
+then
+echo 'Download master.zip failed!'
+return -2
+fi
+
+unzip master.zip
+if [ $? -ne 0 ]
+then
+echo 'Unzip master.zip failed!'
+return -3
+fi
+
+rm -rf master.zip
+
+yum list installed epel-release > /dev/null 2>&1
+if [ $? -ne 0 ]
+then
+yum install -y epel-release
+if [ $? -ne 0 ]
+then
+echo 'Install EPEL failed!'
+return -3
+fi
+fi
+
+yum install -y libnet libpcap libnet-devel libpcap-devel
+
+cd net-speeder-master
+sh build.sh -DCOOKED
+
+
+
+
+}
+
 while true
 do
 echo '1)changeSSHPort12300'
@@ -316,6 +375,7 @@ echo '5)addGitKey'
 echo '6)addGitRepo'
 echo '7)changeRootPsw90etc'
 echo '8)installPPTPD'
+echo '9)installNetSpeeder'
 echo 'Exit Ctrl+C'
 echo -n 'Please Choose: '
 read myFlag
@@ -343,6 +403,9 @@ changeRootPsw90etc
 ;;
 8)
 installPPTPD
+;;
+9)
+installNetSpeeder
 ;;
 *)
 echo 'Wrong Choice!'
