@@ -6,13 +6,15 @@ then
 echo 'The SSH config file does not exist.'
 return 1
 fi
-grep -q "^\s*[pP]\{1\}ort\s\{1,\}12300" /etc/ssh/sshd_config
+# grep -q "^\s*[pP]\{1\}ort\s\{1,\}12300" /etc/ssh/sshd_config
+grep -q -i -E "^[[:space:]]*port[[:space:]]+12300[[:space:]]*$" /etc/ssh/sshd_config
 if [ $? -eq 0 ]
 then
 echo 'The SSH port number is already 12300.'
 return 0
 fi
-sed -i '/^\s*[Pp]\{1\}ort\s\{1,\}/c\Port 12300' /etc/ssh/sshd_config
+# sed -i '/^\s*[Pp]\{1\}ort\s\{1,\}/c\Port 12300' /etc/ssh/sshd_config
+sed -i -r '/^[[:space:]]*[Pp]{1}ort[[:space:]]+/cPort 12301' /etc/ssh/sshd_config
 systemctl restart sshd
 echo 'Change the SSH port 12300 success.'
 }
@@ -55,7 +57,7 @@ if [ ! -d /usr/local/my-ss ]
 then
 mkdir /usr/local/my-ss
 fi
-cat <<EOF > /usr/local/my-ss/ss.json
+cat << EOF > /usr/local/my-ss/ss.json
 {
   "server": "::",
   "server_port": 443,
@@ -68,7 +70,7 @@ cat <<EOF > /usr/local/my-ss/ss.json
   "workers": 1
 }
 EOF
-cat<<EOF > /usr/lib/systemd/system/my-ss.service
+cat << EOF > /usr/lib/systemd/system/my-ss.service
 [Unit]
 Description=Shadowsocks
 After=network.target

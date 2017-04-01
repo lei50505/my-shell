@@ -1,0 +1,22 @@
+Ë«ÒýºÅ½âÎöÄÚÈÝ
+[root@localhost ~]# a=1
+[root@localhost ~]# echo "$a"
+1
+[root@localhost ~]# echo '$a'
+$a
+[root@localhost ~]#
+
+>¸²¸ÇÐ´Èë
+[root@localhost ~]# echo 'sda' > a.txt
+[root@localhost ~]# cat a.txt
+sda
+[root@localhost ~]# echo 'sda' > a.txt
+[root@localhost ~]# cat a.txt
+sda
+[root@localhost ~]# echo 'sda' >> a.txt
+[root@localhost ~]# cat a.txt
+sda
+sda
+[root@localhost ~]#
+
+http://www.cnblogs.com/finallyliuyu/archive/2013/05/27/3101220.html
