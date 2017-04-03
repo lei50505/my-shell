@@ -370,8 +370,11 @@ echo 'Install Success!'
 return 0
 fi
 
-echo '/usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &' >> /etc/rc.local
-echo 'Install Success!'
+echo << EOF  > ~/start-net-speeder.sh
+#!/bin/bash
+/usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &
+EOF
+echo 'Install Success! Run bash ~/start-net-speeder.sh to start!'
 }
 
 while true
