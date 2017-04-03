@@ -370,9 +370,11 @@ sh build.sh -DCOOKED
 echo 'export NET_SPEEDER_HOME=/usr/local/net-speeder-master' >> /etc/profile.d/my-net-speeder.sh
 echo 'export PATH=$NET_SPEEDER_HOME:$PATH' >> /etc/profile.d/my-net-speeder.sh
 source /etc/profile.d/my-net-speeder.sh
-echo 'start: nohup net_speeder venet0 ip > /dev/null 2>&1 &' > run-net-speeder.txt
+
+echo 'start: nohup net_speeder venet0:0 "ip" > /dev/null 2>&1 &' > run-net-speeder.txt
 echo ' stop: killall net_speeder' >> run-net-speeder.txt
-echo 'Install Success! Run "nohup net_speeder venet0 ip > /dev/null 2>&1 &" to start!'
+
+echo 'Install Success! Run "nohup net_speeder venet0:0 ip > /dev/null 2>&1 &" to start!'
 }
 
 while true
