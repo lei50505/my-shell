@@ -362,20 +362,16 @@ sh build.sh -DCOOKED
 
 # http://blog.csdn.net/yuesichiu/article/details/51485147
 
-grep -q -i -E "net-speeder-master.+net_speeder" /etc/rc.local
-
-if [ $? -ne 0 ]
-then
-echo 'Install Success!'
-return 0
-fi
-
-echo << EOF  > ~/start-net-speeder.sh
+#`echo << EOF  > ~/start-net-speeder.sh
 #!/bin/bash
-/usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &
-EOF
-chmod a+x ~/start-net-speeder.sh
-echo 'Install Success! Run bash ~/start-net-speeder.sh to start!'
+#/usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &
+#EOF
+
+echo 'export NET_SPEEDER_HOME=/usr/local/net-speeder-master' >> /etc/profile.d/my-net-speeder.sh
+echo 'export PATH=$NET_SPEEDER_HOME:$PATH' >> /etc/profile.d/my-net-speeder.sh
+source /etc/profile.d/my-net-speeder.sh
+
+echo 'Install Success! Run "nohup net_speeder venet0 ip > /dev/null 2>&1 &" to start!'
 }
 
 while true
