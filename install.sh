@@ -374,6 +374,7 @@ echo << EOF  > ~/start-net-speeder.sh
 #!/bin/bash
 /usr/bin/nohup /usr/local/net-speeder-master/net_speeder venet0 "ip" > /dev/null 2>&1 &
 EOF
+chmod a+x ~/start-net-speeder.sh
 echo 'Install Success! Run bash ~/start-net-speeder.sh to start!'
 }
 
