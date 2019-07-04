@@ -60,11 +60,11 @@ fi
 cat << EOF > /usr/local/my-ss/ss.json
 {
   "server": "::",
-  "server_port": 50409,
+  "server_port": 443,
   "local_address": "127.0.0.1",
   "local_port": 1080,
   "timeout": 300,
-  "password": "caolei963",
+  "password": "caolei123.",
   "method": "aes-256-cfb",
   "fast_open": false,
   "workers": 1
