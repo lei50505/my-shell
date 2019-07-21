@@ -59,14 +59,14 @@ mkdir /usr/local/my-ss
 fi
 cat << EOF > /usr/local/my-ss/ss.json
 {
-  "server": "::",
-  "server_port": 443,
+  "server": "176.122.174.241",
+  "server_port": 50409,
   "local_address": "127.0.0.1",
   "local_port": 1080,
-  "timeout": 5,
+  "timeout": 300,
   "password": "caolei963",
   "method": "aes-256-cfb",
-  "fast_open": false,
+  "fast_open": true,
   "workers": 1
 }
 EOF
