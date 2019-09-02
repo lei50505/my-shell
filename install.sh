@@ -63,10 +63,10 @@ cat << EOF > /usr/local/my-ss/ss.json
   "server_port": 50409,
   "local_address": "127.0.0.1",
   "local_port": 1080,
-  "timeout": 300,
-  "password": "caolei963",
-  "method": "aes-256-cfb",
-  "fast_open": false,
+  "timeout": 20,
+  "password": "caolei123",
+  "method": "chacha20",
+  "fast_open": true,
   "workers": 1
 }
 EOF
