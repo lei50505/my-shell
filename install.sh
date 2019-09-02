@@ -65,7 +65,7 @@ cat << EOF > /usr/local/my-ss/ss.json
   "local_port": 1080,
   "timeout": 20,
   "password": "caolei123",
-  "method": "chacha20",
+  "method": "rc4-md5",
   "fast_open": true,
   "workers": 1
 }
